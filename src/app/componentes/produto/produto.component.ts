@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Produto } from 'src/app/models/produto.model';
+import { CarrinhoService } from 'src/app/servicos/carrinho.service';
 import { ProdutoService } from 'src/app/servicos/produto.service';
 
 @Component({
@@ -12,12 +13,24 @@ export class ProdutoComponent implements OnInit {
 
   produto: Produto | undefined;
 
-  constructor(private route: ActivatedRoute,
-              private produtoService: ProdutoService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private produtoService: ProdutoService,
+    private router: Router,
+    private carrinhoService: CarrinhoService
+  ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
+    const id = +this.route.snapshot.params['id'];
     this.produto = this.produtoService.listarId(id);
+  }
+
+  adicionarCarrinho() {
+    if (!this.produto) {
+      return;
+    }
+    this.carrinhoService.adicionar(this.produto);
+    this.router.navigate(['/carrinho']);
   }
 
 }
