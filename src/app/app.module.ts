@@ -10,6 +10,7 @@ import { CheckoutComponent } from './componentes/checkout/checkout.component';
 
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { ReactiveFormsModule } from '@angular/forms';
 registerLocaleData(ptBr);
 
 @NgModule({
@@ -22,7 +23,8 @@ registerLocaleData(ptBr);
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent]
